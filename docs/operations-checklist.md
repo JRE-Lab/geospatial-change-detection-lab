@@ -4,6 +4,7 @@ index 0000000000000000000000000000000000000000..150eff7ed90eb89e286c1bb61748c242
 --- /dev/null
 +++ b/docs/operations-checklist.md
 @@ -0,0 +1,25 @@
+
 +# Zero-Trust Segmentation Operations Checklist
 +
 +## Pre-flight
