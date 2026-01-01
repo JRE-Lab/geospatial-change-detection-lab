@@ -1,0 +1,78 @@
+diff --git a/configs/segmentation-plan.json b/configs/segmentation-plan.json
+new file mode 100644
+index 0000000000000000000000000000000000000000..3d94de18b318ff10ee802eb8b01a45e835b01aec
+--- /dev/null
++++ b/configs/segmentation-plan.json
+@@ -0,0 +1,72 @@
++{
++  "lab_name": "Zero-Trust Network Segmentation Lab",
++  "zones": [
++    {
++      "name": "user",
++      "subnet": "10.10.10.0/24",
++      "description": "Employee endpoints and VDI sessions"
++    },
++    {
++      "name": "server",
++      "subnet": "10.20.10.0/24",
++      "description": "Application and database workloads"
++    },
++    {
++      "name": "management",
++      "subnet": "10.30.10.0/24",
++      "description": "Admin jump hosts and infrastructure management"
++    },
++    {
++      "name": "security",
++      "subnet": "10.40.10.0/24",
++      "description": "SIEM, logging, and security tooling"
++    }
++  ],
++  "rules": [
++    {
++      "source_zone": "user",
++      "destination_zone": "server",
++      "protocol": "tcp",
++      "ports": [443],
++      "purpose": "Access to front-end application",
++      "identity_required": true,
++      "logging": "allow"
++    },
++    {
++      "source_zone": "server",
++      "destination_zone": "server",
++      "protocol": "tcp",
++      "ports": [5432],
++      "purpose": "App-to-database connectivity",
++      "identity_required": false,
++      "logging": "allow"
++    },
++    {
++      "source_zone": "management",
++      "destination_zone": "server",
++      "protocol": "tcp",
++      "ports": [22, 3389],
++      "purpose": "Administrative access via jump host",
++      "identity_required": true,
++      "logging": "allow"
++    },
++    {
++      "source_zone": "security",
++      "destination_zone": "server",
++      "protocol": "tcp",
++      "ports": [514, 6514],
++      "purpose": "Syslog collection",
++      "identity_required": false,
++      "logging": "allow"
++    },
++    {
++      "source_zone": "user",
++      "destination_zone": "management",
++      "protocol": "tcp",
++      "ports": [22, 3389],
++      "purpose": "Blocked by default (no direct admin from user zone)",
++      "identity_required": true,
++      "logging": "deny"
++    }
++  ]
++}
