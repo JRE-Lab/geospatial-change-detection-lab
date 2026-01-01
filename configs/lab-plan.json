@@ -1,0 +1,60 @@
+diff --git a/configs/lab-plan.json b/configs/lab-plan.json
+new file mode 100644
+index 0000000000000000000000000000000000000000..eb33e0b413d4cb0740a52556cc041fdf4333f512
+--- /dev/null
++++ b/configs/lab-plan.json
+@@ -0,0 +1,54 @@
++{
++  "lab_name": "Geospatial Change-Detection Lab",
++  "roi": {
++    "name": "Example ROI - Port expansion",
++    "bbox": [103.62, 1.22, 103.98, 1.45],
++    "crs": "EPSG:4326",
++    "notes": "Match seasonal timing between before and after imagery to minimize phenology-driven change."
++  },
++  "imagery": {
++    "before": {
++      "source": "Sentinel-2 L2A",
++      "collection": "COPERNICUS/S2_SR",
++      "acquisition_window": "2021-05-01 to 2021-06-15",
++      "cloud_cover_max": 10,
++      "path": "data/raw/before"
++    },
++    "after": {
++      "source": "Sentinel-2 L2A",
++      "collection": "COPERNICUS/S2_SR",
++      "acquisition_window": "2023-05-01 to 2023-06-15",
++      "cloud_cover_max": 10,
++      "path": "data/raw/after"
++    }
++  },
++  "bands": {
++    "nir": "B08",
++    "red": "B04",
++    "quality": "SCL"
++  },
++  "processing": {
++    "resample_m": 10,
++    "alignment": "snap-to-grid",
++    "cloud_mask": "SCL <= 4 or SCL == 7",
++    "clip_buffer_m": 200
++  },
++  "analysis": {
++    "methods": ["nir_difference", "ndvi_difference"],
++    "change_thresholds": {
++      "nir_difference": [-150, 150],
++      "ndvi_difference": [-0.2, 0.2]
++    },
++    "classification": {
++      "no_change": "within threshold",
++      "change": "outside threshold",
++      "review": "manual QA for ambiguous pixels"
++    }
++  },
++  "deliverables": [
++    "ROI map with before/after imagery",
++    "Change detection raster (NIR and NDVI)",
++    "Vectorized change polygons",
++    "Analytic note summarizing drivers of change"
++  ]
++}
