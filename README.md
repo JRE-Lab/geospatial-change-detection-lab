@@ -11,3 +11,7 @@ You will:
 - Optionally compute NDVI for each date and subtract to detect vegetation changes.
 - Classify and visualise change maps, validate results, and write a short analytic note explaining observed changes and their implications.
 - All data used in this lab comes from public sources. The scripts and documentation show how GEOINT change detection can inform intelligence analysis.
+
+## BTC 15-minute Up/Down Market Fetcher
+
+This repo also includes a small CLI that fetches BTC 15-minute up/down markets from **Polymarket** and **Kalshi**, returning separated output blocks for each source with shared parameters (search/limit/min-volume). See the setup guide for usage and examples: `docs/market-updown-setup.md`.
